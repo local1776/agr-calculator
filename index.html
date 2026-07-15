@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Technician vs. AGR — What the Switch Really Pays</title>
 <style>
 :root{--navy:#1F4E79;--brown:#6b3a1f;--grey:#595959;--lt:#f4f6f9;--line:#d8dee6;--good:#1a7a3a;--bad:#b02a2a;--warn:#8a6d00;}
@@ -23,6 +23,8 @@ legend{font-weight:700;color:var(--navy);padding:0 6px;font-size:.98rem}
 select,input[type=text],input[type=number],input[type=date]{width:100%;height:40px;padding:8px 10px;border:1.5px solid var(--line);border-radius:9px;font-size:.92rem;background:#fbfcfe;transition:border-color .15s,box-shadow .15s}
 select:focus,input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(31,78,121,.14);background:#fff}
 select:hover,input:hover{border-color:#9db6cc}
+input[type=date]{min-width:0;max-width:100%;-webkit-appearance:none;appearance:none}
+@media (max-width:700px){select,input[type=text],input[type=number],input[type=date]{font-size:16px}}
 .hint{font-size:.7rem;color:#888;margin-top:3px}
 .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}
 @media(max-width:900px){.cols{grid-template-columns:1fr}}
@@ -52,6 +54,10 @@ select:hover,input:hover{border-color:#9db6cc}
 .callout li{margin-bottom:6px}
 .delta{font-weight:800}
 .delta.pos{color:var(--good)}.delta.neg{color:var(--bad)}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tablewrap table.cmp{min-width:620px}
+.rotHint{display:none;font-size:.78rem;color:var(--grey);margin:4px 0 2px}
+@media (max-width:700px) and (orientation:portrait){.rotHint{display:block}}
 table.cmp{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:6px}
 table.cmp th,table.cmp td{border:1px solid var(--line);padding:6px 8px;text-align:right}
 table.cmp th:first-child,table.cmp td:first-child{text-align:left}
@@ -205,18 +211,20 @@ button.deny{animation:denybtn .45s ease;background:linear-gradient(135deg,#b02a2
 <div class="callout"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:12px"><h3 id="careerTitle" style="margin:0">Your Career — Total Money In</h3><div style="white-space:nowrap"><button class="segbtn segsm active" id="carColaOff" type="button">Today's $</button><button class="segbtn segsm" id="carColaOn" type="button">3% COLA</button></div></div>
 <p class="small" style="margin-bottom:4px">Civilian calculations are based on your Minimum Retirement Age (shown in the title above). AGR calculations are based on the standard 20 years of active service, then pension checks — serve past 20 and the AGR numbers would climb. No promotions assumed. <span id="basisA"></span></p>
 <div id="scenAHead" style="font-weight:700;color:var(--navy);margin:6px 0 2px;font-size:.92rem"></div>
-<table class="cmp"><thead><tr id="careerHead"><th></th><th>Dual-Status</th><th>Title 5</th><th>AGR</th></tr></thead><tbody id="careerRows"></tbody></table>
+<div class="rotHint">Tip: turn your phone sideways for the full table — or swipe the table left and right.</div>
+<div class="tablewrap"><table class="cmp"><thead><tr id="careerHead"><th></th><th>Dual-Status</th><th>Title 5</th><th>AGR</th></tr></thead><tbody id="careerRows"></tbody></table></div>
 <div id="careerVerdict" style="margin-top:10px;font-size:1rem;font-weight:700;color:var(--navy)"></div>
 <div class="small" id="careerNote" style="margin-top:6px"></div>
 <div id="scenBHead" style="font-weight:700;color:var(--navy);margin:16px 0 2px;font-size:.92rem"></div>
 <div class="small" id="scenBIntro" style="margin-bottom:4px"></div>
-<table class="cmp"><thead><tr id="careerHeadB"><th></th><th>Dual-Status</th><th>Title 5</th><th>AGR</th></tr></thead><tbody id="careerRowsB"></tbody></table>
+<div class="tablewrap"><table class="cmp"><thead><tr id="careerHeadB"><th></th><th>Dual-Status</th><th>Title 5</th><th>AGR</th></tr></thead><tbody id="careerRowsB"></tbody></table></div>
 <div id="careerVerdictB" style="margin-top:10px;font-size:1rem;font-weight:700;color:var(--navy)"></div>
 </div>
 
 <div class="callout"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:12px"><h3 style="margin:0">Retirement — Where The Two Paths Really Split</h3><div style="white-space:nowrap"><button class="segbtn segsm active" id="retColaOff" type="button">Today's $</button><button class="segbtn segsm" id="retColaOn" type="button">3% COLA</button></div></div>
 <div id="retStory" style="font-size:.92rem;margin-bottom:8px"></div>
-<table class="cmp"><thead><tr><th></th><th>Dual-Status</th><th>Title 5</th><th>AGR</th></tr></thead><tbody id="retRows"></tbody></table>
+<div class="rotHint">Tip: turn your phone sideways for the full table — or swipe the table left and right.</div>
+<div class="tablewrap"><table class="cmp"><thead><tr><th></th><th>Dual-Status</th><th>Title 5</th><th>AGR</th></tr></thead><tbody id="retRows"></tbody></table></div>
 <div class="small" id="retNotes" style="margin-top:8px"></div>
 </div>
 
