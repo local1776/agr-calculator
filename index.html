@@ -1051,6 +1051,7 @@ function buildPrintDoc(){
   return root;
 }
 function alignPrintRows(doc){
+  try{
   doc.querySelectorAll('.pcols').forEach(grid=>{
     const cols=[...grid.children];
     for(const attr of ['data-r','data-b','data-g']){
@@ -1062,28 +1063,41 @@ function alignPrintRows(doc){
     }
     // equalize whole sections too so the bands stay level
     const n=Math.min(...cols.map(c=>c.querySelectorAll('.sec').length));
-    for(let i=0;i<n;i++){const ss=cols.map(c=>c.querySelectorAll('.sec')[i]);
+    for(let i=0;i<n;i++){const ss=cols.map(c=>c.querySelectorAll('.sec')[i]).filter(Boolean);
+      if(ss.length<2) continue;
       const m=Math.max(...ss.map(e=>e.offsetHeight))+'px'; ss.forEach(e=>e.style.minHeight=m);}
   });
+  }catch(e){}
 }
 function doPrint(){
-  try{
-    const old=document.getElementById('printDoc'); if(old) old.remove();
-    const doc=buildPrintDoc();
-    document.querySelector('.wrap').appendChild(doc);
-    doc.classList.add('measuring');
-    doc.querySelectorAll('.landPage').forEach(p=>p.style.width='947px');
-    doc.querySelectorAll('.pPage').forEach(p=>p.style.width='718px');
-    alignPrintRows(doc);
-    doc.classList.remove('measuring');
-    document.body.classList.add('printing');
-  }catch(e){ /* fall back to printing the screen as-is */ }
-  window.print();
+  let built;
+  try{ built=buildPrintDoc(); }
+  catch(e){ window.print(); return; }
+  const styles=[...document.querySelectorAll('style')].map(s=>s.textContent).join('\n');
+  const nm=($('fname')&&$('fname').value.trim())?(' — '+$('fname').value.trim()):'';
+  const w=window.open('','agrprint','width=920,height=1000');
+  if(!w){ // popup blocked → in-page fallback
+    try{
+      const old=document.getElementById('printDoc'); if(old) old.remove();
+      document.querySelector('.wrap').appendChild(built);
+      built.classList.add('measuring'); alignPrintRows(document); built.classList.remove('measuring');
+      document.body.classList.add('printing');
+      window.print();
+      setTimeout(()=>{document.body.classList.remove('printing'); built.remove();},600);
+    }catch(e){ window.print(); }
+    return;
+  }
+  w.document.open();
+  w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Technician vs. AGR'+nm+'</title><style>'
+    +styles
+    +'\nbody{margin:0;background:#fff}\n.wrap{max-width:none!important;padding:0!important;margin:0!important}\n#printDoc{display:block!important}\n</style></head>'
+    +'<body class="printing"><div class="wrap">'+built.outerHTML+'</div></body></html>');
+  w.document.close();
+  setTimeout(function(){
+    try{ w.focus(); alignPrintRows(w.document); }catch(e){}
+    setTimeout(function(){ try{ w.print(); }catch(e){} }, 300);
+  }, 400);
 }
-window.addEventListener('afterprint',()=>{
-  document.body.classList.remove('printing');
-  const d=document.getElementById('printDoc'); if(d) d.remove();
-});
 $('btnPrint').addEventListener('click',doPrint);
 </script>
 </body>
