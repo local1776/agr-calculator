@@ -70,13 +70,60 @@ details .inner{padding:0 16px 14px;font-size:.84rem;color:#333}
 details .inner p{margin-bottom:8px}
 details .inner li{margin:0 0 6px 18px}
 footer{border-top:1px solid var(--line);margin-top:18px;padding:14px 4px;font-size:.75rem;color:#777}
+#printDoc{display:none}
+#printDoc.measuring{display:block;position:fixed;left:-3000px;top:0;background:#fff;z-index:-1}
 @media print{
- .privacy,fieldset,#printbar,.ack,button{display:none!important}
- .callout,.col,table.cmp{break-inside:avoid}
- header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
- .cols{grid-template-columns:1fr 1fr 1fr}
- body{font-size:12px}
+ body.printing header,body.printing .wrap>*:not(#printDoc){display:none!important}
+ body.printing #printDoc{display:block!important}
+ body{background:#fff}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+@page{size:Letter;margin:11mm}
+@page landp{size:Letter landscape;margin:9mm}
+#printDoc .landPage{page:landp;break-before:page}
+#printDoc .pPage{break-before:page}
+#printDoc .pPage.first{break-before:auto;position:relative;min-height:9.3in}
+#printDoc .segbtn,#printDoc .rotHint,#printDoc #printbar,#printDoc input{display:none!important}
+#printDoc{color:#111}
+#printDoc .pTitle{font-size:14pt;font-weight:800;color:#1F4E79;white-space:nowrap}
+#printDoc .pSub{font-size:8pt;color:#555;margin:1pt 0 8pt}
+#printDoc .pBandTitle{font-size:11pt;font-weight:800;color:#1F4E79;margin:0 0 5pt}
+#printDoc .noteRef{font-size:6.2pt;color:#666;font-style:italic;margin:1pt 0}
+#printDoc .noteItem{font-size:7.5pt;margin:0 0 3pt}
+#printDoc .callout{box-shadow:none;border-left-width:3pt;padding:6pt 8pt;margin-bottom:8pt;font-size:8pt;break-inside:avoid}
+#printDoc h3{font-size:9.5pt}
+#printDoc .headline{font-size:17pt;margin:2pt 0 4pt}
+#printDoc .deck{font-size:9pt;padding-bottom:5pt;line-height:1.4}
+#printDoc .kicker{font-size:6.5pt}
+#printDoc .statcards{gap:5pt;margin:5pt 0}
+#printDoc .statcard{padding:4pt 6pt;gap:5pt}
+#printDoc .statcard .amt{font-size:10.5pt}
+#printDoc .statcard .lb{font-size:6pt}
+#printDoc .statcard svg{width:22px;height:22px}
+#printDoc .pathrow svg{width:18px;height:18px}
+#printDoc .pathrow{font-size:8pt;margin-bottom:4pt}
+#printDoc .plain{font-size:6.8pt;padding:3pt 5pt;margin-top:3pt}
+#printDoc .small{font-size:6.6pt}
+#printDoc .hint{font-size:6.2pt}
+#printDoc .pcols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6pt}
+#printDoc .pcol{border:1pt solid #9db6cc;border-radius:4pt;overflow:hidden}
+#printDoc .colhead{padding:3pt 6pt;gap:6pt}
+#printDoc .colhead b{font-size:8.6pt}
+#printDoc .colhead .small{font-size:6.2pt}
+#printDoc .colhead svg{width:20px;height:20px}
+#printDoc .sec{padding:3pt 6pt;border-top:.6pt solid #ccc}
+#printDoc .sec h3{font-size:6.8pt;margin-bottom:1pt}
+#printDoc .row{font-size:7.6pt;padding:.6pt 0}
+#printDoc .sub{font-size:6.2pt}
+#printDoc .big{font-size:10pt}
+#printDoc .mo{font-size:6pt}
+#printDoc table.cmp{font-size:7.4pt;min-width:0!important;margin-top:3pt;width:100%}
+#printDoc table.cmp th,#printDoc table.cmp td{padding:2pt 4pt}
+#printDoc .tablewrap{overflow:visible}
+#printDoc .fineprint{position:absolute;bottom:0;left:0;right:0;border:none;border-top:.6pt solid #999;background:#fff;box-shadow:none;padding:4pt 0 0;margin:0;font-size:6.2pt;line-height:1.35;border-radius:0}
+#printDoc .fineprint h3{font-size:7pt;margin:0 0 2pt;color:#333}
+#printDoc .fineprint p{margin:1.5pt 0}
+#printDoc .fineprint u{text-decoration:none;font-weight:700}
 .hide{display:none}
 #results{scroll-margin-top:10px}
 button{background:linear-gradient(135deg,#1F4E79,#3f7fb5);color:#fff;border:0;border-radius:9px;padding:12px 28px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(31,78,121,.3);transition:transform .12s,box-shadow .12s}
@@ -186,7 +233,7 @@ button.deny{animation:denybtn .45s ease;background:linear-gradient(135deg,#b02a2
 </fieldset>
 </div>
 
-<div class="callout" style="border-left-color:var(--grey)">
+<div class="callout" id="readFirst" style="border-left-color:var(--grey)">
 <h3>Read This First — What This Tool Does and Doesn't Count</h3>
 <p style="margin-top:4px"><b>It looks forward, not backward.</b> It starts from what you've already banked — your years of service and your retirement points — based on the information you provide, and projects from today to retirement. <u>The results are only as accurate as what you enter.</u></p>
 <p style="margin-top:6px"><b>What's counted:</b> official 2026 pay tables, both pensions, tax-free BAH and BAS, federal and state taxes, TSP matching from here forward, and health insurance — working years and retirement.</p>
@@ -214,7 +261,7 @@ button.deny{animation:denybtn .45s ease;background:linear-gradient(135deg,#b02a2
   <div class="col agrv"><div class="colhead"><svg width="40" height="40" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4" fill="#5a6b3b"/><path d="M4 21v-1.6c0-3.3 3.6-6 8-6s8 2.7 8 6V21z" fill="#5a6b3b"/><rect x="8.6" y="15.2" width="3" height="1.2" rx=".4" fill="#c9b458"/></svg><div><b>Convert: AGR</b><span class="small">Full-time military — 20 years and out</span></div></div><div id="agrCol"></div></div>
 </div>
 
-<div class="callout"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:12px"><h3 id="careerTitle" style="margin:0">Your Career — Total Money In</h3><div style="white-space:nowrap"><button class="segbtn segsm active" id="carColaOff" type="button">Today's $</button><button class="segbtn segsm" id="carColaOn" type="button">3% COLA</button></div></div>
+<div class="callout" id="cardCareer"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:12px"><h3 id="careerTitle" style="margin:0">Your Career — Total Money In</h3><div style="white-space:nowrap"><button class="segbtn segsm active" id="carColaOff" type="button">Today's $</button><button class="segbtn segsm" id="carColaOn" type="button">3% COLA</button></div></div>
 <p class="small" style="margin-bottom:4px">Civilian calculations are based on your Minimum Retirement Age (shown in the title above). AGR calculations are based on the standard 20 years of active service, then pension checks — serve past 20 and the AGR numbers would climb. No promotions assumed. <span id="basisA"></span></p>
 <div id="scenAHead" style="font-weight:700;color:var(--navy);margin:6px 0 2px;font-size:.92rem"></div>
 <div class="rotHint">Tip: turn your phone sideways for the full table — or swipe the table left and right.</div>
@@ -227,19 +274,18 @@ button.deny{animation:denybtn .45s ease;background:linear-gradient(135deg,#b02a2
 <div id="careerVerdictB" style="margin-top:10px;font-size:1rem;font-weight:700;color:var(--navy)"></div>
 </div>
 
-<div class="callout"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:12px"><h3 style="margin:0">Retirement — Where The Two Paths Really Split</h3><div style="white-space:nowrap"><button class="segbtn segsm active" id="retColaOff" type="button">Today's $</button><button class="segbtn segsm" id="retColaOn" type="button">3% COLA</button></div></div>
+<div class="callout" id="cardRetire"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:12px"><h3 style="margin:0">Retirement — Where The Two Paths Really Split</h3><div style="white-space:nowrap"><button class="segbtn segsm active" id="retColaOff" type="button">Today's $</button><button class="segbtn segsm" id="retColaOn" type="button">3% COLA</button></div></div>
 <div id="retStory" style="font-size:.92rem;margin-bottom:8px"></div>
 <div class="rotHint">Tip: turn your phone sideways for the full table — or swipe the table left and right.</div>
 <div class="tablewrap"><table class="cmp"><thead><tr><th></th><th>Dual-Status</th><th>Title 5</th><th>AGR</th></tr></thead><tbody id="retRows"></tbody></table></div>
 <div class="small" id="retNotes" style="margin-top:8px"></div>
 </div>
 
-<div class="callout warn"><h3>What You Give Up if You Convert to AGR</h3><ul id="giveup"></ul></div>
+<div class="callout warn" id="cardGiveup"><h3>What You Give Up if You Convert to AGR</h3><ul id="giveup"></ul></div>
 
 <div id="printbar" style="margin:14px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-  <button type="button" id="btnPrint" class="segbtn" style="border-radius:7px;min-width:90px;padding:8px 0;text-align:center">Print</button>
-  <button type="button" id="btnPdf" class="segbtn" style="border-radius:7px;min-width:90px;padding:8px 0;text-align:center">PDF</button>
-  <span class="small">PDF: pick "Save as PDF" as the printer when the print window opens.</span>
+  <button type="button" id="btnPrint" class="segbtn" style="border-radius:7px;min-width:170px;padding:8px 0;text-align:center">Print / Save as PDF</button>
+  <span class="small">One window opens — pick your printer, or choose "Save as PDF" to get a file.</span>
 </div>
 
 </div><!--results-->
@@ -951,9 +997,94 @@ $('carColaOn').addEventListener('click',()=>setCarCola(0.03));
 function setRetCola(v){COLA_RET=v;$('retColaOff').classList.toggle('active',v===0);$('retColaOn').classList.toggle('active',v!==0);if(!$('results').classList.contains('hide'))render(false);}
 $('retColaOff').addEventListener('click',()=>setRetCola(0));
 $('retColaOn').addEventListener('click',()=>setRetCola(0.03));
-function doPrint(){ $('methodBox').setAttribute('open',''); window.print(); }
+function buildPrintDoc(){
+  const notes=[]; let nn=1;
+  const mk=(cls,html)=>{const d=document.createElement('div'); d.className=cls; if(html!=null)d.innerHTML=html; return d;};
+  const stripIds=el=>{ if(!el.closest||!el.closest('svg')) el.removeAttribute&&el.removeAttribute('id');
+    el.querySelectorAll&&el.querySelectorAll('[id]').forEach(x=>{ if(!x.closest('svg')) x.removeAttribute('id'); }); return el; };
+  const cloneById=id=>{const s=document.getElementById(id); if(!s) return mk(''); const c=s.cloneNode(true);
+    stripIds(c); c.querySelectorAll('[style]').forEach(x=>{x.style.minHeight='';}); c.style.minHeight=''; return c;};
+  const harvest=(root,label)=>{root.querySelectorAll('.plain,.hint').forEach(el=>{
+    if(el.classList.contains('rotHint')){el.remove();return;}
+    const t=el.textContent.replace(/\s+/g,' ').trim(); if(!t){el.remove();return;}
+    notes.push('['+nn+'] '+(label?label+' — ':'')+t);
+    el.replaceWith(mk('noteRef','see end note ['+nn+']')); nn++; });};
+  // ---- page 1: title, bottom line, fine print pinned at foot ----
+  const p1=mk('pPage first');
+  p1.appendChild(mk('pTitle',"Technician vs. AGR: The Math They Don't Want You to Know"));
+  p1.appendChild(mk('pSub','LIUNA Local 1776 · calculator.local1776.org · printed '+new Date().toLocaleDateString()));
+  const hd=cloneById('headline'); harvest(hd,'The Bottom Line'); p1.appendChild(hd);
+  const rf=cloneById('readFirst'); rf.className='fineprint'; rf.removeAttribute('style');
+  rf.querySelectorAll('.ack,input').forEach(x=>x.remove()); p1.appendChild(rf);
+  // ---- landscape band pages for the three cards ----
+  const bandA=mk('landPage'), gA=mk('pcols'), bandB=mk('landPage'), gB=mk('pcols');
+  document.querySelectorAll('.cols .col').forEach(col=>{
+    const name=(col.querySelector('.colhead b')||{}).textContent||'';
+    const secs=[...col.querySelectorAll('.sec')];
+    const mkcol=list=>{const pc=mk('pcol'); const ch=col.querySelector('.colhead');
+      if(ch) pc.appendChild(stripIds(ch.cloneNode(true)));
+      list.forEach(s=>{ if(!s) return; const cs=stripIds(s.cloneNode(true));
+        cs.style.minHeight=''; cs.querySelectorAll('[style]').forEach(x=>{x.style.minHeight='';});
+        harvest(cs,name); pc.appendChild(cs); });
+      return pc;};
+    // capture the standalone note bands (indices 1 and 4) as end notes without printing them
+    [1,4].forEach(i=>{const s=secs[i]; if(!s) return;
+      s.querySelectorAll('.plain,.hint').forEach(el=>{const t=el.textContent.replace(/\s+/g,' ').trim();
+        if(t){notes.push('['+nn+'] '+name+' — '+t); nn++;}});});
+    gA.appendChild(mkcol([secs[0]]));
+    gB.appendChild(mkcol([secs[2],secs[3]]));
+  });
+  bandA.appendChild(mk('pBandTitle','Side by Side — Your Pay (page 1 of 2)')); bandA.appendChild(gA);
+  bandB.appendChild(mk('pBandTitle','Side by Side — Your Bank Account & What the Government Adds (page 2 of 2)')); bandB.appendChild(gB);
+  // ---- portrait card pages ----
+  const pc=mk('pPage'); pc.appendChild(cloneById('cardCareer'));
+  const pr=mk('pPage'); pr.appendChild(cloneById('cardRetire'));
+  const px=mk('pPage'); px.appendChild(cloneById('reality')); px.appendChild(cloneById('cardGiveup'));
+  // ---- methodology + end notes ----
+  const pe=mk('pPage');
+  pe.appendChild(mk('pBandTitle','Where These Numbers Come From (Methodology, Sources & Assumptions)'));
+  pe.appendChild(stripIds(document.getElementById('method').cloneNode(true)));
+  pe.appendChild(mk('pBandTitle','End Notes'));
+  notes.forEach(t=>pe.appendChild(mk('noteItem',t)));
+  const root=document.createElement('div'); root.id='printDoc';
+  [p1,bandA,bandB,pc,pr,px,pe].forEach(x=>root.appendChild(x));
+  return root;
+}
+function alignPrintRows(doc){
+  doc.querySelectorAll('.pcols').forEach(grid=>{
+    const cols=[...grid.children];
+    for(const attr of ['data-r','data-b','data-g']){
+      const vals=new Set(); cols.forEach(c=>c.querySelectorAll('['+attr+']').forEach(el=>vals.add(el.getAttribute(attr))));
+      vals.forEach(v=>{const els=cols.map(c=>c.querySelector('['+attr+'="'+v+'"]')).filter(Boolean);
+        if(els.length<2) return;
+        const m=Math.max(...els.map(e=>e.offsetHeight))+'px';
+        els.forEach(e=>e.style.minHeight=m);});
+    }
+    // equalize whole sections too so the bands stay level
+    const n=Math.min(...cols.map(c=>c.querySelectorAll('.sec').length));
+    for(let i=0;i<n;i++){const ss=cols.map(c=>c.querySelectorAll('.sec')[i]);
+      const m=Math.max(...ss.map(e=>e.offsetHeight))+'px'; ss.forEach(e=>e.style.minHeight=m);}
+  });
+}
+function doPrint(){
+  try{
+    const old=document.getElementById('printDoc'); if(old) old.remove();
+    const doc=buildPrintDoc();
+    document.querySelector('.wrap').appendChild(doc);
+    doc.classList.add('measuring');
+    doc.querySelectorAll('.landPage').forEach(p=>p.style.width='947px');
+    doc.querySelectorAll('.pPage').forEach(p=>p.style.width='718px');
+    alignPrintRows(doc);
+    doc.classList.remove('measuring');
+    document.body.classList.add('printing');
+  }catch(e){ /* fall back to printing the screen as-is */ }
+  window.print();
+}
+window.addEventListener('afterprint',()=>{
+  document.body.classList.remove('printing');
+  const d=document.getElementById('printDoc'); if(d) d.remove();
+});
 $('btnPrint').addEventListener('click',doPrint);
-$('btnPdf').addEventListener('click',doPrint);
 </script>
 </body>
 </html>
