@@ -7,6 +7,8 @@ Nothing in this folder is loaded by the calculator. The whole tool is `index.htm
 - `sweep.js`: runs one member through every duty location in the country.
 - `ui_test.py`, `print_test.py`, `print_gap.py`: headless Chrome checks of the page and of the Print / Save as PDF output (Playwright).
 - `og_card.html`: source for `og.png`, the share-preview image.
+- `territory_test.py`: browser check of Puerto Rico, Guam and the U.S. Virgin Islands.
+- `build-v1.2/`: the script that fixed territory income tax in version 1.2 (Guam and the Virgin Islands as mirror systems, Puerto Rico with its own schedule and a credit for federal tax).
 - `build-v1.1/`: the six scripts that turned version 1.0 into version 1.1, in order (a to f). Kept as a record of exactly what changed.
 
 Rule: any change to the math or the data is run through `engine_test.js` first. Numbers move only when a change is meant to move them.
