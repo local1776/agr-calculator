@@ -1,4 +1,8 @@
 import asyncio, sys, json
+FILL="""(()=>{const set=(id,v)=>{const e=document.getElementById(id); if(e && String(e.value).trim()===''){ e.value=v; e.dispatchEvent(new Event('input',{bubbles:true})); e.dispatchEvent(new Event('change',{bubbles:true})); }};
+set('age','35'); set('deps','yes'); set('filing','married'); set('paysys','WG');
+const gs=document.getElementById('paysys').value==='GS'; set('cgrade',gs?'9':'10'); set('cstep',gs?'5':'3');
+set('civYears','12'); set('fersCohort','y2014plus'); set('grade','E-6'); set('retsys','legacy'); set('yos','12'); set('priorAD','0'); set('depMonths','0'); set('tspCiv','5'); set('tspMil','5');})()"""
 from playwright.async_api import async_playwright
 async def run():
     async with async_playwright() as p:
@@ -11,7 +15,7 @@ async def run():
             for st,oha,rate in (('PR','1500',None),('GU','2000','25'),('VI','2000','25')):
                 await pg.select_option('#state',st); await pg.fill('#oha',oha)
                 if rate: await pg.fill('#hourly',rate)
-                await pg.fill('#fname','Test'); await pg.fill('#tspCiv','5'); await pg.fill('#tspMil','5'); await pg.check('#ack1'); await pg.check('#ack2')
+                await pg.fill('#fname','Test'); await pg.fill('#tspCiv','5'); await pg.fill('#tspMil','5'); await pg.check('#ack1'); await pg.check('#ack2'); await pg.evaluate(FILL)
                 await pg.click('#go'); await pg.wait_for_timeout(700)
                 shown=not await pg.eval_on_selector('#results','e=>e.classList.contains("hide")')
                 hints=await pg.eval_on_selector_all('#dstCol .hint, #agrCol .hint','els=>els.map(e=>e.textContent).filter(t=>/Puerto Rico|Guam|Virgin/.test(t))')
