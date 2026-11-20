@@ -17,7 +17,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-:root{--navy:#0b2a55;--gold:#b8891a;--gold-text:#7a5a08;--ink:#121212;--body-ink:#2a2a2a;--muted:#5f6672;--rule:#dcdfe4;--line:#dcdfe4;--grey:#5f6672;--lt:#f6f7f9;--paper:#fbfaf6;--good:#1a6b3a;--bad:#8c1c2c;--warn:#b8891a;--t5:#3f7fb5;--agr:#5a6b3b;--display:"Playfair Display",Georgia,"Times New Roman",serif;--serif:"Source Serif 4",Georgia,"Times New Roman",serif;--sans:"Libre Franklin","Helvetica Neue",Arial,system-ui,sans-serif}
+:root{--navy:#0b2a55;--gold:#ff9e0b;--gold-text:#b45f00;--ink:#121212;--body-ink:#2a2a2a;--muted:#5f6672;--rule:#dcdfe4;--line:#dcdfe4;--grey:#5f6672;--lt:#f6f7f9;--paper:#fbfaf6;--good:#1a6b3a;--bad:#8c1c2c;--warn:#ff9e0b;--t5:#3f7fb5;--agr:#5a6b3b;--display:"Playfair Display",Georgia,"Times New Roman",serif;--serif:"Source Serif 4",Georgia,"Times New Roman",serif;--sans:"Libre Franklin","Helvetica Neue",Arial,system-ui,sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#222;background:#fff;line-height:1.5}
 .wrap{max-width:1080px;margin:0 auto;padding:16px}
@@ -1462,8 +1462,8 @@ function render(scroll){
         <text x="${(ml+W-mr)/2}" y="${H-8}" text-anchor="middle" font-size="11.5" fill="#2a2a2a">Prior Active-Duty Years</text>
         <path d="${path}" fill="none" stroke="#0b2a55" stroke-width="2.5" stroke-linejoin="round"/>
         ${pts.map(q=>`<circle cx="${X(q[0]).toFixed(1)}" cy="${Y(q[1]).toFixed(1)}" r="2.6" fill="#0b2a55"/>`).join('')}
-        <circle cx="${youX.toFixed(1)}" cy="${youY.toFixed(1)}" r="7" fill="#b8891a" stroke="#fff" stroke-width="2"/>
-        <text x="${Math.min(W-mr-78,youX+13).toFixed(1)}" y="${Math.min(H-mb-6,youY+22).toFixed(1)}" font-size="11.5" font-weight="700" fill="#7a5a08" stroke="#fff" stroke-width="3" paint-order="stroke">You: ${kfmt(dstEdge)}</text>
+        <circle cx="${youX.toFixed(1)}" cy="${youY.toFixed(1)}" r="7" fill="#ff9e0b" stroke="#fff" stroke-width="2"/>
+        <text x="${Math.min(W-mr-78,youX+13).toFixed(1)}" y="${Math.min(H-mb-6,youY+22).toFixed(1)}" font-size="11.5" font-weight="700" fill="#b45f00" stroke="#fff" stroke-width="3" paint-order="stroke">You: ${kfmt(dstEdge)}</text>
       </svg>
       <p class="small" style="margin-top:8px">Above the line, the Technician path is worth more over a lifetime. Below it, AGR is worth more, and only if the Guard keeps you on orders the whole way. Every point uses the rest of your entries exactly as you typed them. The gold dot is you.</p>
       <p class="small" style="margin-top:6px">Why the line moves: the more active time you already have, the sooner an AGR reaches 20 and the full-time paychecks stop, while the Technician job keeps paying to age ${mraR}. This chart counts no second job after the AGR path ends. "If You Retire AGR and Take Another Job" above shows what that job would have to pay.</p>`;
